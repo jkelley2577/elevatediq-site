@@ -414,7 +414,7 @@
         </p>
       </div>
 
-      <form id="waitlistForm" class="form" method="POST">
+      <form id="waitlistForm" class="form" method="POST" action="https://formspree.io/f/mbdjwbnq">
         <label class="label" for="email">Work email</label>
         <input id="email" class="input" type="email" name="email" placeholder="you@company.com" required />
 
@@ -513,25 +513,42 @@
   </div>
 </section>
  
-<script>
+<<script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Keep footer year replacement if you still have it elsewhere.
+    const copy = document.querySelector('.footer-copy');
+    if (copy) {
+      copy.innerHTML = copy.innerHTML.replace('{year}', new Date().getFullYear());
+    }
+
     const form = document.getElementById("waitlistForm");
     const statusEl = document.getElementById("waitlistStatus");
-    if (!form) return;
+    if (!form || !statusEl) return;
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
-      statusEl.textContent = "Opening your email client…";
+      statusEl.textContent = "Submitting…";
 
-      const data = new FormData(form);
-      const body =
-        `Email: ${data.get("email")}\n` +
-        `Company: ${data.get("company") || ""}\n` +
-        `Use case: ${data.get("useCase")}\n`;
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { "Accept": "application/json" }
+        });
 
-      window.location.href =
-        "mailto:hello@elevatediq.com?subject=ElevatedIQ%20Waitlist&body=" +
-        encodeURIComponent(body);
+        if (res.ok) {
+          form.reset();
+          statusEl.textContent = "You’re in. We’ll reach out shortly.";
+        } else {
+          statusEl.textContent = "Something went wrong. Please try again.";
+        }
+      } catch (err) {
+        statusEl.textContent = "Network error. Please try again.";
+      }
+    });
+  });
+</script>
+
     });
   });
 </script>
