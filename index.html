@@ -513,16 +513,11 @@
   </div>
 </section>
  
-<<script>
+<script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Keep footer year replacement if you still have it elsewhere.
-    const copy = document.querySelector('.footer-copy');
-    if (copy) {
-      copy.innerHTML = copy.innerHTML.replace('{year}', new Date().getFullYear());
-    }
-
     const form = document.getElementById("waitlistForm");
     const statusEl = document.getElementById("waitlistStatus");
+
     if (!form || !statusEl) return;
 
     form.addEventListener("submit", async function (e) {
@@ -549,6 +544,3 @@
   });
 </script>
 
-    });
-  });
-</script>
