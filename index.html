@@ -25,9 +25,9 @@
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav-cta">
-        <a href="#cta" class="btn btn-outline">Log in</a>
-        <a href="#cta" class="btn btn-primary">Get started</a>
-      </div>
+  <a href="#contact" class="btn btn-outline">Request a demo</a>
+  <a href="#early-access" class="btn btn-primary">Join early access</a>
+</div>
     </div>
   </header>
 
@@ -42,9 +42,9 @@
             Instant answers and expert guidance that save you time, money, and headaches with your elevators.
           </p>
           <div class="hero-ctas">
-            <a href="#cta" class="btn btn-primary">Analyze my contract</a>
-            <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
-          </div>
+  <a href="#early-access" class="btn btn-primary">Join early access</a>
+  <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+</div>
           <div class="hero-footnote">
             No long-term contracts. Start with a single analysis in minutes.
           </div>
@@ -390,8 +390,56 @@
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section section-alt" id="faq">
+    <!-- FAQ --><!-- EARLY ACCESS / WAITLIST -->
+<section class="section" id="early-access">
+  <div class="container">
+    <div class="section-header">
+      <h2>Get Early Access</h2>
+      <p>We’re onboarding a limited set of early users. Join the waitlist and we’ll reach out to schedule your first analysis.</p>
+    </div>
+
+    <div class="cta-card">
+      <div>
+        <h3 style="margin-top:0;">What you’ll get</h3>
+        <ul class="pricing-list" style="margin-top:12px;">
+          <li>Contract red flags + negotiation points</li>
+          <li>Proposal comparison across vendors</li>
+          <li>Modernization timing + budgeting guidance</li>
+          <li>Plain-English executive summary</li>
+        </ul>
+
+        <p class="hero-footnote" style="margin-top:14px;">
+          Early access includes priority onboarding and discounted pricing.
+        </p>
+      </div>
+
+      <form id="waitlistForm" class="form" method="POST">
+        <label class="label" for="email">Work email</label>
+        <input id="email" class="input" type="email" name="email" placeholder="you@company.com" required />
+
+        <label class="label" for="company">Company / Building (optional)</label>
+        <input id="company" class="input" type="text" name="company" placeholder="Acme Property Group" />
+
+        <label class="label" for="useCase">What do you want help with?</label>
+        <select id="useCase" class="input" name="useCase" required>
+          <option value="" selected disabled>Select one</option>
+          <option>Maintenance contract review</option>
+          <option>Repair quote review</option>
+          <option>Modernization planning</option>
+          <option>Portfolio budgeting / forecasting</option>
+        </select>
+
+        <button class="btn btn-primary block" type="submit">Join the waitlist</button>
+        <p class="tiny muted" id="waitlistStatus"></p>
+
+        <a class="btn btn-outline block" href="mailto:hello@elevatediq.com?subject=ElevatedIQ%20Demo%20Request">
+          Request a demo instead
+        </a>
+      </form>
+    </div>
+  </div>
+</section>
+
       <div class="container">
         <div class="section-header">
           <h2>Frequently asked questions</h2>
@@ -443,69 +491,25 @@
         </div>
       </div>
     </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById("waitlistForm");
+    const statusEl = document.getElementById("waitlistStatus");
+    if (!form) return;
 
-    <!-- CTA -->
-    <section class="section cta-section" id="cta">
-      <div class="container cta-inner">
-        <div class="cta-content">
-          <h2>Turn elevator confusion into clear decisions.</h2>
-          <p>
-            Upload a contract, quote, or inspection report and let ElevatedIQ handle the heavy lifting—so you can protect
-            your buildings, budgets, and tenants.
-          </p>
-          <div class="hero-ctas">
-            <a href="#top" class="btn btn-primary">Start my first analysis</a>
-            <a href="#contact" class="btn btn-ghost">Talk to our team</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      statusEl.textContent = "Opening your email client…";
 
-    <!-- CONTACT / FOOTER -->
-    <section class="section" id="contact">
-      <div class="container contact-inner">
-        <div class="contact-content">
-          <h2>Need something more custom?</h2>
-          <p>
-            Whether you manage a single building or a national portfolio, we can help you design the right ElevatedIQ rollout.
-          </p>
-          <p>
-            Email us at
-            <a href="mailto:hello@elevatediq.com">hello@elevatediq.com</a>
-            and a member of our team will follow up.
-          </p>
-        </div>
-      </div>
-    </section>
+      const data = new FormData(form);
+      const body =
+        `Email: ${data.get("email")}\n` +
+        `Company: ${data.get("company") || ""}\n` +
+        `Use case: ${data.get("useCase")}\n`;
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <div class="footer-left">
-          <div class="logo logo-footer">
-            <span class="logo-mark">E</span>
-            <span class="logo-text">Elevated<span>IQ</span></span>
-          </div>
-          <p class="footer-text">Instant answers and expert guidance for your vertical transportation needs.</p>
-        </div>
-        <div class="footer-links">
-          <a href="#top">Home</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-        </div>
-        <p class="footer-copy">© {year} ElevatedIQ. All rights reserved.</p>
-      </div>
-    </footer>
-
-    <script>
-      // Simple year replacement
-      document.addEventListener('DOMContentLoaded', function () {
-        const copy = document.querySelector('.footer-copy');
-        if (copy) {
-          copy.innerHTML = copy.innerHTML.replace('{year}', new Date().getFullYear());
-        }
-      });
-    </script>
-</body>
-</html>
+      window.location.href =
+        "mailto:hello@elevatediq.com?subject=ElevatedIQ%20Waitlist&body=" +
+        encodeURIComponent(body);
+    });
+  });
+</script>
